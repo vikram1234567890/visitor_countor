@@ -7,6 +7,10 @@ require_once("dbconnect.php");
 <html lang="en">
   <head>
  <style>
+ #loading {width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block; z-index: 99}
+
+#loading-image {position: absolute;top: 40%;left: 45%;z-index: 100}
+
 .margin {
     
     margin: 10px 10px 10px 10px;
@@ -45,7 +49,10 @@ $user_id=$_SESSION["indication_user"];
  require_once("navigation.php");
  ?>
  <div class="margin">
- 
+     <div id="loading">
+<img id="loading-image" src="ajax-loader.gif" alt="Loading..."  height="42" width="42"/>
+</div>
+
 <h2 class="sub-header">My Links</h2>
 <div class="form-group has-feedback">
 <input type="text" id="search" name="search" class="form-control" placeholder="Search your links..."> <span id="counter" class="text-muted form-control-feedback"></span>
@@ -109,6 +116,9 @@ $("td").on("click", ".delete", function() {
         var id = $(this).data("id");
         bootbox.confirm("Are you sure you wish to delete this link?", function(result) {
             if (result == true) {
+                
+document.getElementById("loading").style.display = "block" ;
+
                 $.ajax({
                     type: "POST",
                     url: "worker.php",
@@ -121,8 +131,11 @@ $("td").on("click", ".delete", function() {
                             type: "danger",
                             allow_dismiss: true
                         });
+                        
+document.getElementById("loading").style.display = "none" ;
                     },
                     success: function(data) {
+                        
                         $.notify({
                             message: "Link deleted!",
                             icon: "glyphicon glyphicon-ok",
@@ -130,9 +143,12 @@ $("td").on("click", ".delete", function() {
                             type: "success",
                             allow_dismiss: true
                         });
+                        
                          console.log(data);
                         setTimeout(function() {
                             
+document.getElementById("loading").style.display = "none" ;
+
                         	window.location.reload();
                         }, 1000);
                     }
@@ -164,7 +180,12 @@ $("td").on("click", ".delete", function() {
             
             $("#counter").text("0");
         }
+        
+        
     });
+    
+document.getElementById("loading").style.display = "none" ;
+
 	</script>
 	
 	</tbody>

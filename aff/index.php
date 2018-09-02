@@ -9,6 +9,10 @@ require_once("dbconnect.php");
 <head>
 
      <style>
+     #loading {width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block; z-index: 99}
+
+#loading-image {position: absolute;top: 40%;left: 45%;z-index: 100}
+
 .margin {
     
     margin: 10px 10px 10px 10px;
@@ -72,6 +76,9 @@ $resultgetmonth = mysqli_fetch_assoc($getmonth);
 ?>
 
 <div class="margin">
+    <div id="loading">
+<img id="loading-image" src="ajax-loader.gif" alt="Loading..."  height="42" width="42"/>
+</div>
 
 <h1 class="page-header">Dashboard</h1>
 <div class="row placeholders">
@@ -296,6 +303,9 @@ getLocation();
         var id = $(this).data("id");
         bootbox.confirm("Are you sure you wish to delete this link?", function(result) {
             if (result == true) {
+                
+document.getElementById("loading").style.display = "block" ;
+
                 $.ajax({
                     type: "POST",
                     url: "worker.php",
@@ -308,6 +318,8 @@ getLocation();
                             type: "danger",
                             allow_dismiss: true
                         });
+                        
+document.getElementById("loading").style.display = "none" ;
                     },
                     success: function(string) {
                         $.notify({
@@ -317,6 +329,9 @@ getLocation();
                             type: "success",
                             allow_dismiss: true
                         });
+                        
+document.getElementById("loading").style.display = "none" ;
+
                         console.log(string);
                         setTimeout(function() {
                         	window.location.reload();
@@ -393,6 +408,8 @@ var user_id = <?php echo $user_id; ?>;
                 });
 //	post_to_url("store_location.php", array, "post");
 }
+
+document.getElementById("loading").style.display = "none" ;
 
 
 

@@ -19,7 +19,9 @@ $user_id=$_SESSION["indication_user"];
      });
 </script>
      <style>
-     
+   #loading {width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block; z-index: 99}
+
+#loading-image {position: absolute;top: 40%;left: 45%;z-index: 100} 
 body{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -62,12 +64,16 @@ body{
 	 ?>
 
 <div class="margin">
+    <div id="loading">
+<img id="loading-image" src="ajax-loader.gif" alt="Loading..." height="42" width="42" />
+</div> 
 <h1 class="page-header">Add Custom Link</h1>
 <form id="addform" action="/m/aff/worker.php"   method="POST"  enctype='multipart/form-data' >
 <div class="form-group">
   <b>Item Name</b>  
 <input type="text" class="form-control" id="name" name="name" placeholder="Type a name..." maxlength="100" required>
 </div>
+ 
 <div class="form-group">
       <b>Item image </b>  
       </br>
@@ -154,6 +160,7 @@ hideElements();
 
     frm.submit(function (e) {
 
+ document.getElementById("loading").style.display = "block";  
         e.preventDefault();
 
         $.ajax({
@@ -169,11 +176,16 @@ hideElements();
                     allow_dismiss: true
                 });
              console.log(data);
+             
+ document.getElementById("loading").style.display = "none";  
                 window.location.reload();
+                
             },
             error: function (data) {
                 console.log('An error occurred.');
                 console.log(data);
+                
+ document.getElementById("loading").style.display = "none";  
             },
         });
     });
@@ -215,6 +227,7 @@ hideElements();
   
       
 }
+ document.getElementById("loading").style.display = "none";  
 </script>
 </body>
 </html>

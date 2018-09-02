@@ -12,17 +12,17 @@ $url=$_POST['url'];
 
 $user_id=$_SESSION['indication_user'];
 
- $n=mysqli_fetch_assoc(mysqli_query($con,"SELECT  `name` from `available_links` WHERE url='$url'"));
+ $n=mysqli_fetch_assoc(mysqli_query($con,"SELECT  name,`url` from `available_links` WHERE url='$url'"));
 $name=$n['name'];
-
+$url=$n['url'];
  $e=mysqli_fetch_assoc(mysqli_query($con,"SELECT  `email` from `affiliate_users` WHERE user_id=$user_id"));
  $arr=explode("@",$e['email']);
  $email=$arr[0];
- $abbrevation=$name."_".$email;
+ $abbrevation=$url."_".$email;
  
   $abbrevation= str_replace(' ','', $abbrevation);
   
-$availability = mysqli_query($con, "SELECT  id FROM `links` WHERE user_id=$user_id and name='$name'  ");
+$availability = mysqli_query($con, "SELECT  abbreviation FROM `links` WHERE user_id=$user_id and abbreviation='$abbreviation'  ");
 
   if(mysqli_num_rows($availability)==0){
 

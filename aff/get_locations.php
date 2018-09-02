@@ -13,7 +13,7 @@ $php_location = array(
     
     
       
-$latlng = mysqli_query($con, "SELECT DISTINCT lat,lng FROM approximate_location,counts where approximate_location.ip=counts.ip and counts.link_id=$link_id");
+$latlng = mysqli_query($con, "SELECT  lat,lng FROM approximate_location,counts where approximate_location.ip=counts.ip and counts.link_id=$link_id");
 
 echo mysqli_error($con);
 

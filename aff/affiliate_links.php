@@ -19,6 +19,9 @@ $user_id=$_SESSION["indication_user"];
      });
 </script>
 <style>
+#loading {width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block; z-index: 99}
+
+#loading-image {position: absolute;top: 40%;left: 45%;z-index: 100}
 
 body{
     -webkit-touch-callout: none;
@@ -56,6 +59,10 @@ body{
 	 ?>
 
 <div class="margin">
+        <div id="loading">
+<img id="loading-image" src="ajax-loader.gif" alt="Loading..."  height="42" width="42"/>
+</div>
+
 <h2 class="sub-header">Affiliate links</h2>
 <div class="form-group has-feedback">
 <input type="text" id="search" name="search" class="form-control" placeholder="Search your links..."> <span id="counter" class="text-muted form-control-feedback"></span>
@@ -109,6 +116,8 @@ mysqli_close($con);
 document.addEventListener('contextmenu', event => event.preventDefault());
 function addLink(url1){
 
+document.getElementById("loading").style.display = "block" ;
+
    $.ajax({  
         type: "POST",  
         url: "store_links.php",  
@@ -123,6 +132,8 @@ function addLink(url1){
                             type: "danger",
                             allow_dismiss: true
                         });
+                        
+document.getElementById("loading").style.display = "none" ;
                     },
         success: function(dataString) {  
             $.notify({
@@ -134,6 +145,9 @@ function addLink(url1){
                         });
                         setTimeout(function() {
                             console.log(dataString);
+                            
+document.getElementById("loading").style.display = "none" ;
+
                         	window.location.reload();
                         }, 1000);
         }  
@@ -165,6 +179,9 @@ function addLink(url1){
             $("#counter").text("0");
         }
     });
+    
+document.getElementById("loading").style.display = "none" ;
+
 </script>
 
 </tbody>
